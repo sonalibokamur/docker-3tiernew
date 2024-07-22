@@ -1,0 +1,16 @@
+FROM ubuntu
+# update package list and inastall apache 
+RUN apt-get update && \
+    apt-get install apache2 -y
+
+# copy index html file to the web server root directory
+COPY index.html /var/wwww/html/index.html
+
+#set the working directory to the web server root directory
+WORKDIR /var/www/html
+
+#expose port 80 for the http server
+EXPOSE 80
+
+#start apache in the foreground as the entrypoint
+CMD [ "apache2ctl","-D","FOREGROUND" ]

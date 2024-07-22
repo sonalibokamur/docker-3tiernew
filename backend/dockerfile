@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+RUN apt-get update
+RUN apt-get install openjdk-17-jre-headless -y
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.91/bin/apache-tomcat-9.0.91.tar.gz ./
+RUN tar -xvf apache-tomcat-9.0.91.tar.gz -C /opt
+WORKDIR /opt/apache-tomcat-9.0.91 
+COPY context.xml conf/context.xml
+COPY student.war webapps/student.war
+COPY mysql-connector.jar lib/mysql-connector.jar
+EXPOSE 8080 
+ENTRYPOINT [ "bin/catalina.sh" ]
+CMD [ "run" ]
+
